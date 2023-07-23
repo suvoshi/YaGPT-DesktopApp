@@ -2,23 +2,43 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 import html2text
 from fake_headers import Headers
+import time
+import json
+from random import choice
 
-IMP_WAIT = 10000
+IMP_WAIT = 120
+
+
+def get_promt():
+    with open("promts.json", "r") as file:
+        promts = json.load(file)["main"]
+    
+    return choice(promts)
 
 
 class Chat:
     def __init__(self):
-        options = webdriver.ChromeOptions()
-        #options.add_argument("--headless")
-        options.add_argument('--window-size=1920,1080')
+        options = webdriver.FirefoxOptions()
+        firefoxprofile = webdriver.FirefoxProfile()
+        firefoxprofile.set_preference("media.volume_scale", "0.0")
+        options.add_argument("--headless")
+        options.profile = firefoxprofile
 
-        self.driver = webdriver.Chrome(options=options)
+        self.driver = webdriver.Firefox(options=options)
         self.driver.implicitly_wait(IMP_WAIT)
 
-        self.driver.get("https://yandex.ru/search/?text=Hello World")
-        self.driver.find_element(
+        self.driver.get("https://yandex.ru/search/?text={}".format(get_promt()))
+
+        time.sleep(2)
+
+        # find element and wait till render
+        button = self.driver.find_element(
             By.CSS_SELECTOR, "div[class='VanillaReact AliceFabPromo AliceFabPromo_shown']"
-        ).click()
+        )
+
+        time.sleep(1)
+
+        button.click()
 
         # checking that browser render site
         self.driver.find_elements(By.CSS_SELECTOR, 'div[class*="alice__suggest alice__suggest"]')
@@ -28,6 +48,8 @@ class Chat:
             By.CSS_SELECTOR, 'div[class*="input-container__text-input"]'
         )
         inp.send_keys(message)
+
+        time.sleep(1)
 
         self.driver.find_element(
             By.CSS_SELECTOR, 'button[aria-label="Отправить запрос Алисе"]'

@@ -40,9 +40,8 @@ def main(page):
 
             # send - front
             message_container = ft.Container(
-                content=ft.Text(message, size=15, font_family="RobotoSlab"),
+                content=ft.Text(message, size=15, font_family="RobotoSlab", selectable=True),
                 bgcolor=PALETTE["normal-light"],
-                alignment=ft.alignment.center_left,
                 border_radius=10,
                 padding=10
             )
@@ -57,9 +56,8 @@ def main(page):
 
             # get answer - front
             message_container = ft.Container(
-                content=ft.Text(ans, size=15, font_family="RobotoSlab"),
+                content=ft.Text(ans, size=15, font_family="RobotoSlab", selectable=True),
                 bgcolor=PALETTE["normal"],
-                alignment=ft.alignment.center_left,
                 border_radius=10,
                 padding=10
             )
@@ -67,6 +65,10 @@ def main(page):
             chat_listview.controls.append(message_container)
             send_panel.disabled = False
             page.update()
+    
+    def close():
+        page.window_close()
+        yagptchat.close()
 
     # window tools
     tools = ft.Container(
@@ -77,10 +79,10 @@ def main(page):
                             bgcolor=PALETTE["normal"],
                             padding=20
                         ),
-                        expand=True,
+                        expand=True, maximizable=False
                     ),
                     ft.IconButton(ft.icons.MINIMIZE_ROUNDED, on_click=lambda _: minimize(), icon_color=ft.colors.WHITE),
-                    ft.IconButton(ft.icons.CLOSE, on_click=lambda _: page.window_close(), icon_color=ft.colors.WHITE),
+                    ft.IconButton(ft.icons.CLOSE, on_click=lambda _: close(), icon_color=ft.colors.WHITE),
                 ],
                 spacing=0, 
             ),
