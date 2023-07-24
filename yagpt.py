@@ -10,9 +10,9 @@ IMP_WAIT = 120
 
 
 def get_promt():
-    with open("promts.json", "r") as file:
+    with open("./promts.json", "r") as file:
         promts = json.load(file)["main"]
-    
+
     return choice(promts)
 
 
@@ -33,7 +33,8 @@ class Chat:
 
         # find element and wait till render
         button = self.driver.find_element(
-            By.CSS_SELECTOR, "div[class='VanillaReact AliceFabPromo AliceFabPromo_shown']"
+            By.CSS_SELECTOR,
+            "div[class='VanillaReact AliceFabPromo AliceFabPromo_shown']",
         )
 
         time.sleep(1)
@@ -41,7 +42,9 @@ class Chat:
         button.click()
 
         # checking that browser render site
-        self.driver.find_elements(By.CSS_SELECTOR, 'div[class*="alice__suggest alice__suggest"]')
+        self.driver.find_elements(
+            By.CSS_SELECTOR, 'div[class*="alice__suggest alice__suggest"]'
+        )
 
     def send_message(self, message):
         inp = self.driver.find_element(
