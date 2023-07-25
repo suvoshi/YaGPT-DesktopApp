@@ -1,8 +1,8 @@
 import pystray
 from PIL import Image
-from app.app import app_setup
+from ui import app_setup
 
-image = Image.open("yagpticon.png")
+image = Image.open("./app/yagpticon.png")
 
 
 def exit():

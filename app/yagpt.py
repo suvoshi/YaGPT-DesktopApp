@@ -10,7 +10,7 @@ IMP_WAIT = 120
 
 
 def get_promt():
-    with open("./promts.json", "r") as file:
+    with open("./app/promts.json", "r") as file:
         promts = json.load(file)["main"]
 
     return choice(promts)
