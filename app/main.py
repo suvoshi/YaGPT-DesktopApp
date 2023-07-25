@@ -1,6 +1,6 @@
 import pystray
 from PIL import Image
-from app import app_setup
+from app.app import app_setup
 
 image = Image.open("yagpticon.png")
 

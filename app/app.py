@@ -1,5 +1,5 @@
 import flet as ft
-from yagpt import Chat
+from app.yagpt import Chat
 
 PALETTE = {
     "light": "#9ECAFF",
